@@ -123,7 +123,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
 
             String verseContentPart = verse['content'].trimLeft();
             verseContentPart = verseContentPart.trimRight();
-            verseContent += verseContentPart + '\n';
+
+            print(verseContent);
+            if (verseContentPart.isEmpty) {
+              print("verseContentPart is empty!!!!!!!!!!!!!!!!");
+              // If verseContent is empty, fetch the random verse again
+              await fetchRandomBibleVerseFromDefaultList(bookId);
+            } else {
+              verseContent += verseContentPart + '\n';
+            }
         }
       }
       setState(() {
@@ -151,14 +159,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
           Map<String, dynamic>? verse = await fetchVerseByVerseId(bookId, resultVerseId);
 
           if (verse != null) {
-            setState(() {
-              String verseContent = verse['content'].trimLeft();
-              verseContent = verseContent.trimRight();
-              bibleVerseContent = '"' + verseContent + '"';
-              bibleVerseId = verse['id'];
-            });
-            bibleVerseContentBackup[selectedLanguageDefault] = [bibleVerseId, bibleVerseContent];
-            currentVerseIdComplete = bibleVerseId;
+            String verseContent = verse['content'].trimLeft();
+            verseContent = verseContent.trimRight();
+
+            print(verseContent);
+            if (verseContent.isEmpty) {
+              print("verseContent is empty!!!!!!!!!!!!!!!!");
+              // If verseContent is empty, fetch the random verse again
+              await fetchRandomBibleVerse(bookId);
+            } else {
+              setState(() {
+                bibleVerseContent = '"' + verseContent + '"';
+                bibleVerseId = verse['id'];
+              });
+              bibleVerseContentBackup[selectedLanguageDefault] =
+              [bibleVerseId, bibleVerseContent];
+              currentVerseIdComplete = bibleVerseId;
+            }
           }
         }
       }
@@ -493,7 +510,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MainDashboardScreen(),
+                        builder: (context) => const DashboardScreen(),
                       ),
                     );
                   },

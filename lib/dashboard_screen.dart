@@ -1,63 +1,109 @@
 import 'package:flutter/material.dart';
-import 'carousel_slider.dart';
-import 'church_map.dart';
-import 'church_highlight.dart';
-import 'package:latlong2/latlong.dart'; // For LatLng
+import 'package:church_silz/virtual_church.dart';
 
-class MainDashboardScreen extends StatefulWidget {
-  @override
-  _MainDashboardScreenState createState() => _MainDashboardScreenState();
-}
-
-class _MainDashboardScreenState extends State<MainDashboardScreen> {
-  final List<ChurchHighlight> churchHighlights = [
-    ChurchHighlight(
-        id: '1',
-        image: 'assets/ornament_frame.png',
-        title: 'Titel1',
-        description: 'Die den Aposteln Petrus und Paulus geweihte Pfarrkirche von Silz wurde in den Jahren 1846 bis 1848 an Stelle eines älteren Baus unter der Leitung des Baumeisters Benedikt Perwög erbaut. Ursprünglich hätte der vom Architekten Alois Haas für 1400 Personen ausgelegte Bau noch um einiges größer werden sollen, als er dann tatsächlich zur Ausführung gelangte, aber für dieses Projekt konnte von der Regierung keine Genehmigung erlangt werden. Obwohl sich die überarbeiteten Haas´schen Pläne in technischer Beziehung als zweckmäßig und ausführbar erwiesen, hatten die Initiatoren des Kirchenneubaus, allen voran Pfarrer Peter Span, in der eigenen Gemeinde mit großem Widerständen zu kämpfen. Es kam dabei immer wieder zu unschönen Auseinandersetzungen zwischen Befürwortern und Gegnern des Kirchenneubaus, die in zahlreichen Beschwerdeschriften an das Gubernium gipfelten. Die Regierung setzte diesem Streit schließlich mit dem Dekret vom 26. September 1845 ein abruptes Ende, indem sie die Anordnung traf, den Bau sogleich, ohne die weiteren Einwendungen der opponierenden Parteien zu beachten, auszuführen. Noch am Tag, als dieses Dekret ausgefertigt wurde, wurde mit dem Abriss der alten Totenkapelle begonnen. Nach dem Abbruch der alten Kirche konnte endlich mit dem Neubau begonnen werden. Schon ein halbes Jahr nach der Grundsteinlegung am 2. Juli 1846 war der Rohbau des neuen Gotteshauses erstellt und der Turm bis zur Höhe des Kirchendachs aufgeführt. Zu Allerheiligen 1847 war dann auch der Innenausbau so weit fortgeschritten, dass die Pfarrgemeinde in die Kirche einziehen konnte. Am 14. November 1847 wurde sie vom Abt des Stiftes Stams geweiht. ',
-        audioUrl: "assets/audio/english/sample.wav",
-        positionX: 100,
-        positionY: 80,
-    ),
-    ChurchHighlight(
-      id: '2',
-      image: 'assets/highlight2.JPG',
-      title: 'Titel2',
-      description: 'Description for Highlight 2',
-      audioUrl: "assets/audio/english/sample.wav",
-      positionX: 200,
-      positionY: 80,
-    ),
-  ];
-
-  int selectedHighlightIndex = 0;
-  int currentPage = 0;
-
-  void updateSelectedHighlightIndex(int index) {
-    setState(() {
-      selectedHighlightIndex = index;
-    });
-  }
+class DashboardScreen extends StatelessWidget {
+  const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: const Text('Main Dashboard'),
+        title: const Text('Dashboard'),
         centerTitle: true,
         backgroundColor: const Color(0xFFD2B48C),
       ),
-      body: Column(
-        children: [
-          VirtualChurchTourSection(churchHighlights: churchHighlights, onHighlightSelected: updateSelectedHighlightIndex),
-          Expanded(
-            child: ChurchGroundView(selectedHighlightIndex: selectedHighlightIndex, churchHighlights: churchHighlights),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              DashboardOption(
+                title: 'Church History',
+                icon: Icons.history, // Replace with your custom icon
+                onTap: () {
+                  // Navigate to Church History screen
+                  // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => ChurchHistoryScreen()));
+                },
+              ),
+              DashboardOption(
+                title: 'Virtual Church Tour',
+                icon: Icons.location_pin, // Replace with your custom icon
+                onTap: () {
+                  // Navigate to Virtual Church Tour screen
+                  // You can use Navigator to push a new screen
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => VirtualChurchScreen()));
+                },
+              ),
+              DashboardOption(
+                title: 'Donation Selection',
+                icon: Icons.monetization_on, // Replace with your custom icon
+                onTap: () {
+                  // Navigate to Donation Selection screen
+                  // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => DonationSelectionScreen()));
+                },
+              ),
+              DashboardOption(
+                title: 'Actual News Selection',
+                icon: Icons.article, // Replace with your custom icon
+                onTap: () {
+                  // Navigate to Actual News Selection screen
+                  // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => NewsSelectionScreen()));
+                },
+              ),
+            ],
           ),
-          // Other sections can be added here
-        ],
+        )
       ),
     );
   }
+}
+
+class DashboardOption extends StatelessWidget {
+  final String title;
+  final IconData icon;
+  final void Function() onTap;
+
+  const DashboardOption({super.key,
+    required this.title,
+    required this.icon,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Card(
+        elevation: 4,
+        margin: const EdgeInsets.all(16),
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              Icon(
+                icon,
+                size: 64,
+                color: const Color(0xFFD2B48C), // Customize icon color
+              ),
+              const SizedBox(height: 16),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: DashboardScreen(),
+  ));
 }
