@@ -125,7 +125,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
             verseContentPart = verseContentPart.trimRight();
 
             print(verseContent);
-            if (verseContentPart.isEmpty) {
+            if (verseContentPart.isEmpty || verseContentPart.length <= 3) {
               print("verseContentPart is empty!!!!!!!!!!!!!!!!");
               // If verseContent is empty, fetch the random verse again
               await fetchRandomBibleVerseFromDefaultList(bookId);
@@ -163,7 +163,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
             verseContent = verseContent.trimRight();
 
             print(verseContent);
-            if (verseContent.isEmpty) {
+            if (verseContent.isEmpty || verseContent.length <= 3) {
               print("verseContent is empty!!!!!!!!!!!!!!!!");
               // If verseContent is empty, fetch the random verse again
               await fetchRandomBibleVerse(bookId);

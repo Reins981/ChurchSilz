@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:church_silz/virtual_church.dart';
+import 'package:church_silz/church_history.dart';
+import 'package:church_silz/news_section.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -13,47 +17,115 @@ class DashboardScreen extends StatelessWidget {
         centerTitle: true,
         backgroundColor: const Color(0xFFD2B48C),
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              DashboardOption(
-                title: 'Church History',
-                icon: Icons.history, // Replace with your custom icon
-                onTap: () {
-                  // Navigate to Church History screen
-                  // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => ChurchHistoryScreen()));
-                },
+      body: ListView(
+        children: [
+          SizedBox(
+            height: 300, // Adjust the height for the map
+            child: Card(
+              elevation: 4,
+              margin: const EdgeInsets.all(16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+                side: const BorderSide(color: Colors.grey, width: 1.0),
               ),
-              DashboardOption(
-                title: 'Virtual Church Tour',
-                icon: Icons.location_pin, // Replace with your custom icon
-                onTap: () {
-                  // Navigate to Virtual Church Tour screen
-                  // You can use Navigator to push a new screen
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => VirtualChurchScreen()));
-                },
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFFD2B48C),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        topRight: Radius.circular(16),
+                      ),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        'Interactive Map',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    height: 220, // Adjust the map height
+                    child: FlutterMap(
+                      options: const MapOptions(
+                        center: LatLng(47.26534, 10.92777),
+                        zoom: 15.0,
+                      ),
+                      children: [
+                        TileLayer(
+                          urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          subdomains: ['a', 'b', 'c'],
+                        ),
+                        const MarkerLayer(
+                          markers: [
+                            Marker(
+                              alignment: Alignment.center,
+                              width: 60.0,
+                              height: 60.0,
+                              point: LatLng(47.26534, 10.92777),
+                              child: Icon(
+                                Icons.location_pin,
+                                color: Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              DashboardOption(
-                title: 'Donation Selection',
-                icon: Icons.monetization_on, // Replace with your custom icon
-                onTap: () {
-                  // Navigate to Donation Selection screen
-                  // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => DonationSelectionScreen()));
-                },
-              ),
-              DashboardOption(
-                title: 'Actual News Selection',
-                icon: Icons.article, // Replace with your custom icon
-                onTap: () {
-                  // Navigate to Actual News Selection screen
-                  // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => NewsSelectionScreen()));
-                },
-              ),
-            ],
+            ),
           ),
-        )
+          SizedBox(
+            height: 400, // Adjust the height for the map
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: GridView.count(
+                crossAxisCount: 2,
+                shrinkWrap: true,
+                physics: NeverScrollableScrollPhysics(),
+                children: [
+                  DashboardOption(
+                    title: 'Virtual Church',
+                    icon: Icons.location_pin,
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => VirtualChurchScreen()));
+                    },
+                  ),
+                  DashboardOption(
+                    title: 'Church History',
+                    icon: Icons.history,
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChurchHistoryPage()));
+                    },
+                  ),
+                  DashboardOption(
+                    title: 'Actual News',
+                    icon: Icons.article,
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewsSection()));
+                    },
+                  ),
+                  DashboardOption(
+                    title: 'Donation',
+                    icon: Icons.monetization_on,
+                    onTap: () {
+                      // Navigate to Donation Selection screen
+                      // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => DonationSelectionScreen()));
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -64,7 +136,8 @@ class DashboardOption extends StatelessWidget {
   final IconData icon;
   final void Function() onTap;
 
-  const DashboardOption({super.key,
+  const DashboardOption({
+    super.key,
     required this.title,
     required this.icon,
     required this.onTap,
@@ -77,33 +150,31 @@ class DashboardOption extends StatelessWidget {
       child: Card(
         elevation: 4,
         margin: const EdgeInsets.all(16),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Icon(
-                icon,
-                size: 64,
-                color: const Color(0xFFD2B48C), // Customize icon color
-              ),
-              const SizedBox(height: 16),
-              Text(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 16),
+            Icon(
+              icon,
+              size: 64,
+              color: const Color(0xFFD2B48C),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: Text(
                 title,
                 style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 14,
                   fontWeight: FontWeight.bold,
                 ),
+                textAlign: TextAlign.center, // Center-align the text
               ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 16),
+          ],
         ),
       ),
     );
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: DashboardScreen(),
-  ));
-}

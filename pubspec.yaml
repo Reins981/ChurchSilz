@@ -80,6 +80,8 @@ flutter:
     - assets/Wappen_at_silz.svg.png
     - assets/church_ground_view.jpg
     - assets/highlight_marker.png
+    - assets/news1.jpg
+    - assets/news2.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

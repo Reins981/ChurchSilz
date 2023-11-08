@@ -20,11 +20,15 @@ class _ChurchGroundViewState extends State<ChurchGroundView> {
     const churchGroundImageUrl = 'assets/church_ground_view.jpg';
 
     final markers = <Widget>[];
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     for (var i = 0; i < widget.churchHighlights.length; i++) {
       final highlight = widget.churchHighlights[i];
-      final left = highlight.positionX; // Adjust the marker positions as needed
-      final top = highlight.positionY;
+      double xPosition = screenWidth * highlight.positionXPercentage;
+      double yPosition = screenHeight * highlight.positionYPercentage;
+      final left = xPosition; // Adjust the marker positions as needed
+      final top = yPosition;
 
       // Define the marker size
       final markerSize = (i == widget.selectedHighlightIndex) ? 30.0 : 20.0; // Increase size when selected
@@ -59,10 +63,13 @@ class _ChurchGroundViewState extends State<ChurchGroundView> {
               ),
             ),
             const SizedBox(height: 5), // Adjust the spacing as needed
-            Image.asset(
-              highlight.image, // Use the image asset path from ChurchHighlight
-              width: imageWidth,
-              height: imageHeight,
+            ClipOval(
+              child: Image.asset(
+                highlight.image, // Use the image asset path from ChurchHighlight
+                width: imageWidth,
+                height: imageHeight,
+                fit: BoxFit.cover, // Ensure the image fits within the oval
+              ),
             ),
           ],
         ),

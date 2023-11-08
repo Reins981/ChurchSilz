@@ -159,7 +159,6 @@ class _ChurchHighlightDetailPageState extends State<ChurchHighlightDetailPage> {
           onPressed: () {
             setState(() {
               displayAudio = true;
-              player.play();
             });
           },
           style: ElevatedButton.styleFrom(
