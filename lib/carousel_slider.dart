@@ -75,7 +75,9 @@ class _VirtualChurchTourSectionState extends State<VirtualChurchTourSection> {
               final highlight = widget.churchHighlights[index];
               return ChurchHighlightWidget(
                 highlight: highlight,
-                realIndex: realIndex
+                realIndex: realIndex,
+                index: index,
+                selectedHighlightIndex: selectedHighlightIndex,
               );
             },
           ),
@@ -89,8 +91,11 @@ class _VirtualChurchTourSectionState extends State<VirtualChurchTourSection> {
 class ChurchHighlightWidget extends StatelessWidget {
   final ChurchHighlight highlight;
   final int realIndex;
+  final int index;
+  final int selectedHighlightIndex;
 
-  const ChurchHighlightWidget({super.key, required this.highlight, required this.realIndex});
+  const ChurchHighlightWidget({super.key, required this.highlight, required this.realIndex,
+    required this.index, required this.selectedHighlightIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -154,10 +159,11 @@ class ChurchHighlightWidget extends StatelessWidget {
                 ],
               ),
             ),
-            AnimatedHandPointer(
-              xPosition: xPosition,
-              yPosition: yPosition,
-            ),
+            if (index == selectedHighlightIndex)
+              AnimatedHandPointer(
+                xPosition: xPosition,
+                yPosition: yPosition,
+              ),
           ]
         ),
       ),
@@ -184,7 +190,7 @@ class _AnimatedHandPointerState extends State<AnimatedHandPointer> with SingleTi
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 1000),
     );
     // Create a Tween for vertical movement
     _animation = Tween<Offset>(

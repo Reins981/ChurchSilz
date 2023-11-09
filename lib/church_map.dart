@@ -31,7 +31,7 @@ class _ChurchGroundViewState extends State<ChurchGroundView> {
       final top = yPosition;
 
       // Define the marker size
-      final markerSize = (i == widget.selectedHighlightIndex) ? 30.0 : 20.0; // Increase size when selected
+      final markerSize = (i == widget.selectedHighlightIndex) ? 20.0 : 10.0; // Increase size when selected
       final double imageWidth = (i == widget.selectedHighlightIndex) ? 60: 30;
       final double imageHeight = (i == widget.selectedHighlightIndex) ? 60: 30;
 
@@ -57,7 +57,7 @@ class _ChurchGroundViewState extends State<ChurchGroundView> {
                 backgroundColor: Colors.red, // Customize marker color
                 child: Icon(
                   Icons.location_pin, // Replace with your marker icon
-                  size: markerSize * 0.6,
+                  size: markerSize * 0.8,
                   color: Colors.white,
                 ),
               ),

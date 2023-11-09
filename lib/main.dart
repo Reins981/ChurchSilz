@@ -124,7 +124,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
             String verseContentPart = verse['content'].trimLeft();
             verseContentPart = verseContentPart.trimRight();
 
-            print(verseContent);
+            print(verseContentPart);
+            print(verseContentPart.length);
             if (verseContentPart.isEmpty || verseContentPart.length <= 3) {
               print("verseContentPart is empty!!!!!!!!!!!!!!!!");
               // If verseContent is empty, fetch the random verse again
@@ -163,6 +164,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
             verseContent = verseContent.trimRight();
 
             print(verseContent);
+            print(verseContent.length);
             if (verseContent.isEmpty || verseContent.length <= 3) {
               print("verseContent is empty!!!!!!!!!!!!!!!!");
               // If verseContent is empty, fetch the random verse again
@@ -376,12 +378,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
             top: 20.0,
             left: 20.0,
             child: Image.asset(
-              'assets/Wappen_at_silz.svg.png', // Replace 'crest.png' with the path to your crest image
+              'assets/Wappen_at_silz.svg.png',
               width: 70,
-              height: 70, // Adjust the fit as needed
+              height: 70,
             ),
           ),
-          // Language Selection Button
           Positioned(
             top: 20.0,
             right: 20.0,
@@ -395,7 +396,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
                   ),
                 ),
                 SizedBox(
-                  width: 100.0, // Set a specific width for the dropdown
+                  width: 100.0,
                   child: Container(
                     decoration: BoxDecoration(
                       color: const Color(0xFFD2B48C),
@@ -403,7 +404,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
                     ),
                     child: Theme(
                       data: Theme.of(context).copyWith(
-                        canvasColor: const Color(0xFFD2B48C), // Same background color for the dropdown menu
+                        canvasColor: const Color(0xFFD2B48C),
                       ),
                       child: DropdownButton<String>(
                         value: selectedLanguageDefault,
@@ -422,7 +423,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
                           if (newValue != null) {
                             setState(() {
                               selectedLanguageDefault = newValue;
-                              welcomeMessageDefault = selectedLanguageDefault == "Deutsch" ? welcomeMessageGerman : welcomeMessageEnglish;
+                              welcomeMessageDefault =
+                              selectedLanguageDefault == "Deutsch" ? welcomeMessageGerman : welcomeMessageEnglish;
                             });
                             updateLanguageOfCurrentBibleVerse();
                           }
@@ -431,7 +433,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
                         underline: Container(
                           height: 0,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.transparent), // Remove the white background
+                            border: Border.all(color: Colors.transparent),
                           ),
                         ),
                         isExpanded: true,
@@ -445,92 +447,141 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
             ),
           ),
           Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  welcomeMessageDefault,
-                  style: const TextStyle(
-                    fontSize: 32.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    shadows: <Shadow>[
-                      Shadow(
-                        offset: Offset(1.0, 1.0), // Apply a text shadow
-                        blurRadius: 3.0,
-                        color: Colors.black,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 40),
+                  SizedBox(
+                    height: 100,
+                    child: FittedBox(
+                      child: Text(
+                        welcomeMessageDefault,
+                        style: const TextStyle(
+                          fontSize: 32.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          shadows: <Shadow>[
+                            Shadow(
+                              offset: Offset(1.0, 1.0),
+                              blurRadius: 3.0,
+                              color: Colors.black,
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20.0),
-                FadeTransition(
-                  opacity: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-                    parent: animationController,
-                    curve: Curves.easeIn,
-                  )),
-                  child: Container(
+                  const SizedBox(height: 20.0),
+                  Container(
                     height: 300.0,
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.4), // Semi-transparent black overlay
+                      color: Colors.black.withOpacity(0.4),
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    child: ListView(
+                    child: Stack(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            bibleVerseContent,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 25.0,
-                              color: Colors.white, // Text color on the dark overlay
-                            ),
+                        FadeTransition(
+                          opacity: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+                            parent: animationController,
+                            curve: Curves.easeIn,
+                          )),
+                          child: ListView(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  bibleVerseContent,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 25.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  bibleVerseId,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25.0,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            bibleVerseId,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25.0,
-                              color: Colors.white, // Text color on the dark overlay
+                        Positioned(
+                          top: 4.0,
+                          right: 4.0,
+                          child: MaterialButton(
+                            onPressed: () {
+                              print("Refresh button pressed!");
+                              bibleVerseContentBackup.clear();
+                              bibleRandomizer();
+                            },
+                            shape: const CircleBorder(),
+                            color: Colors.transparent,
+                            padding: const EdgeInsets.all(4.0),
+                            child: const CircleAvatar(
+                              backgroundColor: Colors.transparent,
+                              child: Icon(Icons.refresh, color: Colors.white),
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
-                const SizedBox(height: 20.0),
-                ElevatedButton(
-                  onPressed: () {
-                    // Navigate to the Main Dashboard
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DashboardScreen(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFD2B48C), // Background color
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
+                  const SizedBox(height: 20.0),
+                  Container(
+                    height: 150,
+                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: SingleChildScrollView(
+                        child: GestureDetector(
+                          onTap: () {
+                            // Navigate to the Main Dashboard
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const DashboardScreen(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(50.0),
+                                topRight: Radius.circular(50.0),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color(0xFFD2B48C).withOpacity(0.6),
+                                  spreadRadius: 5,
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 3),
+                                ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(50.0),
+                                topRight: Radius.circular(50.0),
+                              ),
+                              child: Image.asset(
+                                'assets/church_door.png',
+                                width: 100,
+                                height: 150,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        )
                     ),
-                    elevation: 4,
-                    minimumSize: const Size(200, 50),
                   ),
-                  child: const Text(
-                    'ENTER',
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

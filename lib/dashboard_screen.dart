@@ -4,6 +4,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:church_silz/virtual_church.dart';
 import 'package:church_silz/church_history.dart';
 import 'package:church_silz/news_section.dart';
+import 'package:church_silz/donation.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -118,7 +119,7 @@ class DashboardScreen extends StatelessWidget {
                     icon: Icons.monetization_on,
                     onTap: () {
                       // Navigate to Donation Selection screen
-                      // Example: Navigator.push(context, MaterialPageRoute(builder: (context) => DonationSelectionScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => DonationPage()));
                     },
                   ),
                 ],
