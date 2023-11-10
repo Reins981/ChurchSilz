@@ -1,29 +1,28 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:church_silz/church_highlight.dart';
 import 'package:church_silz/church_details.dart';
-import 'package:latlong2/latlong.dart'; // For LatLng
+import 'package:google_fonts/google_fonts.dart';
+import 'text_contents.dart';
 
 final List<ChurchHighlight> churchHighlightsDefault = [
   ChurchHighlight(
       id: '1',
       image: 'assets/highlight1.JPG',
-      title: 'Default',
-      description: 'Default',
       audioUrl: "assets/audio/english/sample.wav",
       positionXPercentage: 0.3,
       positionYPercentage: 0.2,
+      selectedLanguage: "Deutsch"
   ),
 ];
 
 class VirtualChurchTourSection extends StatefulWidget {
   final List<ChurchHighlight> churchHighlights;
   final Function(int) onHighlightSelected; // Callback function
+  final String selectedLanguage;
 
   const VirtualChurchTourSection({super.key, required this.churchHighlights,
-    required this.onHighlightSelected});
+    required this.onHighlightSelected, required this.selectedLanguage});
 
   @override
   _VirtualChurchTourSectionState createState() =>
@@ -35,21 +34,26 @@ class _VirtualChurchTourSectionState extends State<VirtualChurchTourSection> {
 
   @override
   Widget build(BuildContext context) {
+
+    final String virtualChurchTourMessage = widget.selectedLanguage == "Deutsch" ?
+    getTextContentGerman("virtualChurchTourMessage"): getTextContentEnglish("virtualChurchTourMessage");
+
     return Card(
       elevation: 4,
       margin: const EdgeInsets.all(16),
       color: const Color(0xFFD2B48C),
       child: Column(
         children: [
-          const ListTile(
+          ListTile(
             title: Center(
               child: Text(
-                "Virtuelle Kirchen Tour",
-                style: TextStyle(
+                virtualChurchTourMessage,
+                style: GoogleFonts.lato(
                   fontSize: 24.0,
                   color: Colors.white,
+                  letterSpacing: 1.0,
                   shadows: <Shadow>[
-                    Shadow(
+                    const Shadow(
                       offset: Offset(1.0, 1.0),
                       blurRadius: 3.0,
                       color: Colors.black,
@@ -148,10 +152,11 @@ class ChurchHighlightWidget extends StatelessWidget {
                   const SizedBox(height: 8), // Adjust the spacing as needed
                   Text(
                     highlight.title,
-                    style: const TextStyle(
+                    style: GoogleFonts.lato(
                       fontSize: 20,
                       fontStyle: FontStyle.italic,
                       color: Colors.white,
+                      letterSpacing: 1.0
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -215,17 +220,18 @@ class _AnimatedHandPointerState extends State<AnimatedHandPointer> with SingleTi
       top: widget.yPosition,
       child: SlideTransition(
         position: _animation,
-        child: const Column(
+        child: Column(
           children: [
-            Icon(
+            const Icon(
               Icons.touch_app,
               size: 40,
               color: Colors.brown,
             ),
             Text(
               'Click',
-              style: TextStyle(
+              style: GoogleFonts.lato(
                 color: Colors.brown,
+                letterSpacing: 1.0,
               ),
             ),
           ],

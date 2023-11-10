@@ -2,47 +2,56 @@
 import 'package:flutter/material.dart';
 import 'package:church_silz/news_card.dart';
 import 'package:church_silz/detailed_news.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'text_contents.dart';
 
 class NewsSection extends StatefulWidget {
+
+  const NewsSection({super.key, required this.selectedLanguage});
+
+  final String selectedLanguage;
+
   @override
   _NewsSectionState createState() => _NewsSectionState();
 }
 
 class _NewsSectionState extends State<NewsSection> {
+
+  late List<NewsItem> newsItems;
+
   // Mock news data
-  final List<NewsItem> newsItems = [
-    NewsItem(
-      title: 'News Title 1',
-      description: 'Description of News Title 1. '
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-    'Nullam ut semper ex. Integer venenatis libero at eros '
-    'porttitor, at facilisis felis tristique. Phasellus non '
-    'dolor in erat venenatis tincidunt. Proin sit amet nibh '
-    'eget nunc bibendum semper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
-    'Nullam ut semper ex. Integer venenatis libero at eros '
-    'porttitor, at facilisis felis tristique. Phasellus non '
-    'dolor in erat venenatis tincidunt. Proin sit amet nibh '
-    'eget nunc bibendum semper.',
-      imageUrl: 'assets/news1.jpg',
-      date: "10.03.2023",
-    ),
-    NewsItem(
-      title: 'News Title 2',
-      description: 'Description of News Title 2.',
-      imageUrl: 'assets/news2.jpg',
-      date: "04.06.2021",
-    ),
-    // Add more news items as needed
-  ];
+  @override
+  void initState() {
+    super.initState();
+    newsItems = [
+      NewsItem(
+        id: "1",
+        imageUrl: 'assets/news1.jpg',
+        date: "10.03.2023",
+        selectedLanguage: widget.selectedLanguage,
+      ),
+      NewsItem(
+        id: "2",
+        imageUrl: 'assets/news2.jpg',
+        date: "04.06.2021",
+        selectedLanguage: widget.selectedLanguage,
+      ),
+      // Add more news items as needed
+    ];
+  }
 
   int selectedNewsIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+
+    final String newsMessageHeader = widget.selectedLanguage == "Deutsch" ?
+    getTextContentGerman("newsMessageHeader"): getTextContentEnglish("newsMessageHeader");
+
     return Scaffold(
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
-          title: const Text('Aktuelles'),
+          title: Text(newsMessageHeader, style: GoogleFonts.lato(fontSize: 20, letterSpacing: 1.0)),
           centerTitle: true,
           backgroundColor: const Color(0xFFD2B48C),
         ),
@@ -70,17 +79,25 @@ class _NewsSectionState extends State<NewsSection> {
 }
 
 class NewsItem {
+  final String id;
   final String title;
   final String description;
   final String imageUrl;
   final String date;
+  final String selectedLanguage;
 
   NewsItem({
-    required this.title,
-    required this.description,
+    required this.id,
     required this.imageUrl,
     required this.date,
-  });
+    required this.selectedLanguage,
+  }): title = selectedLanguage == "Deutsch"
+        ? getTextContentGerman("newsTitle_$id")
+        : getTextContentEnglish("newsTitle_$id"),
+        description = selectedLanguage == "Deutsch"
+            ? getTextContentGerman("newsDescription_$id")
+            : getTextContentEnglish("newsDescription_$id");
+
 }
 
 class NewsSlider extends StatelessWidget {

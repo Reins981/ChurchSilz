@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'dart:math';
 import 'bible_verses.dart';
 import 'dashboard_screen.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'text_contents.dart';
 
 void main() {
   runApp(const ChurchApp());
@@ -37,9 +39,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
   String bibleVerseContent = "Loading..."; // Initialize with a loading message
   String bibleVerseId = "";
   String selectedLanguageDefault = "Deutsch"; // You can set the selected language based on user selection
-  String welcomeMessageGerman = "Willkommen in der Pfarrkirche Silz \n(Petrus u. Paulus)";
-  String welcomeMessageEnglish = "Welcome to our church Pfarrkirche Silz \n(Peter and Paul)";
-  String welcomeMessageDefault = "Willkommen in der Pfarrkirche Silz \n(Petrus u. Paulus)";
+  String welcomeMessageGerman = getTextContentGerman("welcomeMessage");
+  String welcomeMessageEnglish = getTextContentEnglish("welcomeMessage");
+  String welcomeMessageDefault = getTextContentGerman("welcomeMessage");
   List<String> currentVerseIds = [];
   String currentVerseIdComplete = "";
   Map<String, List<String>> bibleVerseContentBackup = {};
@@ -419,7 +421,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
                         child: Center(
                           child: Text(
                             value,
-                            style: const TextStyle(fontSize: 16.0, color: Colors.white),
+                            style: GoogleFonts.lato(
+                                fontSize: 16.0,
+                                color: Colors.white,
+                                letterSpacing: 1.0
+                            ),
                           ),
                         ),
                       );
@@ -429,10 +435,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
                         setState(() {
                           selectedLanguageDefault = newValue;
                           welcomeMessageDefault =
-                          selectedLanguageDefault == 'Deutsch' ? 'Willkommen!' : 'Welcome!';
+                          selectedLanguageDefault == 'Deutsch' ? welcomeMessageGerman : welcomeMessageEnglish;
                         });
-                        // Uncomment the line below if you have the 'updateLanguageOfCurrentBibleVerse' method
-                        // updateLanguageOfCurrentBibleVerse();
+                        updateLanguageOfCurrentBibleVerse();
                       }
                     },
                     icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
@@ -460,12 +465,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
                 children: [
                   Text(
                     welcomeMessageDefault,
-                    style: const TextStyle(
+                    style: GoogleFonts.lato(
                       fontSize: 36.0,
+                      letterSpacing: 1.0,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       shadows: [
-                        Shadow(
+                        const Shadow(
                           offset: Offset(2.0, 2.0),
                           blurRadius: 5.0,
                           color: Colors.black,
@@ -496,10 +502,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   bibleVerseContent,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.normal,
+                                  style: GoogleFonts.ebGaramond(
+                                    //fontWeight: FontWeight.normal,
                                     fontSize: 25.0,
                                     color: Colors.white,
+                                    letterSpacing: 0.5,
                                   ),
                                 ),
                               ),
@@ -553,7 +560,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
               onTap: () {
                 // Navigate to the Main Dashboard
                 // Uncomment the line below if you have the 'DashboardScreen' class
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardScreen(selectedLanguage: selectedLanguageDefault,)));
               },
               child: Container(
                 height: 150,

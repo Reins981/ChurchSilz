@@ -5,16 +5,34 @@ import 'package:church_silz/virtual_church.dart';
 import 'package:church_silz/church_history.dart';
 import 'package:church_silz/news_section.dart';
 import 'package:church_silz/donation.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'text_contents.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key});
+  const DashboardScreen({super.key, required this.selectedLanguage});
+
+  final String selectedLanguage;
 
   @override
   Widget build(BuildContext context) {
+
+    final String dashboardMessageHeader = selectedLanguage == "Deutsch" ?
+    getTextContentGerman("dashboardMessageHeader"): getTextContentEnglish("dashboardMessageHeader");
+    final String interactiveMapMessage = selectedLanguage == "Deutsch" ?
+    getTextContentGerman("interactiveMapMessage"): getTextContentEnglish("interactiveMapMessage");
+    final String virtualChurchDashboard = selectedLanguage == "Deutsch" ?
+    getTextContentGerman("virtualChurchDashboard"): getTextContentEnglish("virtualChurchDashboard");
+    final String churchHistoryDashboard = selectedLanguage == "Deutsch" ?
+    getTextContentGerman("churchHistoryDashboard"): getTextContentEnglish("churchHistoryDashboard");
+    final String actualNewsDashboard = selectedLanguage == "Deutsch" ?
+    getTextContentGerman("actualNewsDashboard"): getTextContentEnglish("actualNewsDashboard");
+    final String donationDashboard = selectedLanguage == "Deutsch" ?
+    getTextContentGerman("donationDashboard"): getTextContentEnglish("donationDashboard");
+
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: Text(dashboardMessageHeader, style: GoogleFonts.lato(fontSize: 20, letterSpacing: 1.0)),
         centerTitle: true,
         backgroundColor: const Color(0xFFD2B48C),
       ),
@@ -40,13 +58,14 @@ class DashboardScreen extends StatelessWidget {
                         topRight: Radius.circular(16),
                       ),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        'Interactive Map',
-                        style: TextStyle(
+                        interactiveMapMessage,
+                        style: GoogleFonts.lato(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
+                          letterSpacing: 1.0,
                         ),
                       ),
                     ),
@@ -94,32 +113,32 @@ class DashboardScreen extends StatelessWidget {
                 physics: NeverScrollableScrollPhysics(),
                 children: [
                   DashboardOption(
-                    title: 'Virtual Church',
+                    title: virtualChurchDashboard,
                     icon: Icons.location_pin,
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => VirtualChurchScreen()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => VirtualChurchScreen(selectedLanguage: selectedLanguage,)));
                     },
                   ),
                   DashboardOption(
-                    title: 'Church History',
+                    title: churchHistoryDashboard,
                     icon: Icons.history,
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChurchHistoryPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ChurchHistoryPage(selectedLanguage: selectedLanguage)));
                     },
                   ),
                   DashboardOption(
-                    title: 'Actual News',
+                    title: actualNewsDashboard,
                     icon: Icons.article,
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewsSection()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => NewsSection(selectedLanguage: selectedLanguage,)));
                     },
                   ),
                   DashboardOption(
-                    title: 'Donation',
+                    title: donationDashboard,
                     icon: Icons.monetization_on,
                     onTap: () {
                       // Navigate to Donation Selection screen
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => DonationPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => DonationPage(selectedLanguage: selectedLanguage,)));
                     },
                   ),
                 ],
@@ -164,9 +183,10 @@ class DashboardOption extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: const TextStyle(
+                style: GoogleFonts.lato(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
+                  letterSpacing: 1.0,
                 ),
                 textAlign: TextAlign.center, // Center-align the text
               ),

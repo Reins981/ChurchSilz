@@ -4,6 +4,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:church_silz/church_highlight.dart';
 import 'package:church_silz/audio_player.dart';
 import 'package:church_silz/ornament_image.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ChurchHighlightDetailPage extends StatefulWidget {
   final ChurchHighlight highlight;
@@ -48,8 +49,9 @@ class _ChurchHighlightDetailPageState extends State<ChurchHighlightDetailPage> {
       appBar: AppBar(
         title: Text(
           widget.highlight.title,
-          style: const TextStyle(
+          style: GoogleFonts.lato(
             fontStyle: FontStyle.italic,
+            letterSpacing: 1.0,
           ),
         ),
         centerTitle: true,
@@ -167,7 +169,7 @@ class _ChurchHighlightDetailPageState extends State<ChurchHighlightDetailPage> {
               borderRadius: BorderRadius.circular(20.0),
             ),
           ),
-          child: const Text('Audio'),
+          child: Text('Audio', style: GoogleFonts.lato(fontSize: 16, letterSpacing: 1.0)),
         ),
         const SizedBox(width: 16),
         ElevatedButton(
@@ -183,7 +185,7 @@ class _ChurchHighlightDetailPageState extends State<ChurchHighlightDetailPage> {
               borderRadius: BorderRadius.circular(20.0),
             ),
           ),
-          child: const Text('Text'),
+          child: Text('Text', style: GoogleFonts.lato(fontSize: 16, letterSpacing: 1.0)),
         ),
       ],
     );
@@ -194,7 +196,7 @@ class _ChurchHighlightDetailPageState extends State<ChurchHighlightDetailPage> {
       padding: const EdgeInsets.all(16),
       child: Text(
         description,
-        style: const TextStyle(fontSize: 24),
+        style: GoogleFonts.lato(fontSize: 16, letterSpacing: 1.0),
         textAlign: TextAlign.center,
       ),
     );

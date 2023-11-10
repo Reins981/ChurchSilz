@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:church_silz/news_section.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class NewsCard extends StatelessWidget {
   final NewsItem newsItem;
@@ -44,18 +45,20 @@ class NewsCard extends StatelessWidget {
                   children: [
                     Text(
                       newsItem.date,
-                      style: const TextStyle(
+                      style: GoogleFonts.lato(
                         fontSize: 12,
                         color: Colors.grey,
+                        letterSpacing: 1.0,
                       ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       newsItem.title,
-                      style: const TextStyle(
+                      style: GoogleFonts.lato(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
+                        letterSpacing: 1.0,
                       ),
                       maxLines: 2, // Limit to 2 lines of text
                       overflow: TextOverflow.ellipsis, // Show ellipsis if text overflows

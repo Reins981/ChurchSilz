@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppFooter extends StatelessWidget {
   @override
@@ -43,8 +44,9 @@ class AppFooter extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           'example@example.com',
-                          style: TextStyle(
+                          style: GoogleFonts.lato(
                             color: Colors.grey[600],
+                            letterSpacing: 1.0,
                           ),
                         ),
                       ],
@@ -59,8 +61,9 @@ class AppFooter extends StatelessWidget {
                       const SizedBox(height: 4),
                       Text(
                         '@church_app',
-                        style: TextStyle(
+                        style: GoogleFonts.lato(
                           color: Colors.grey[600],
+                          letterSpacing: 1.0,
                         ),
                       ),
                     ],
@@ -85,8 +88,9 @@ class AppFooter extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           '+1234567890',
-                          style: TextStyle(
+                          style: GoogleFonts.lato(
                             color: Colors.grey[600],
+                            letterSpacing: 1.0,
                           ),
                         ),
                       ],
@@ -105,8 +109,9 @@ class AppFooter extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           '123 Main St',
-                          style: TextStyle(
+                          style: GoogleFonts.lato(
                             color: Colors.grey[600],
+                            letterSpacing: 1.0,
                           ),
                         ),
                       ],
