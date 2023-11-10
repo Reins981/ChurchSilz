@@ -384,15 +384,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
             height: double.infinity,
           ),
 
-          // Header Logo
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 50.0),
-              child: Image.asset(
-                'assets/Wappen_at_silz.svg.png',
-                width: 100,
-                height: 100,
-              ),
+          // Header Logo (Wappen) at the top left corner
+          Positioned(
+            top: 40.0,
+            left: 20.0,
+            child: Image.asset(
+              'assets/Wappen_at_silz.svg.png',
+              width: 100,
+              height: 100,
             ),
           ),
 
