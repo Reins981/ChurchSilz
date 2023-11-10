@@ -367,116 +367,121 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
+        fit: StackFit.expand,
         children: [
-          Image.asset(
-            'assets/Pfarrkirche_Silz_2015.JPG',
-            fit: BoxFit.cover,
-            height: double.infinity,
-            width: double.infinity,
-          ),
-          Positioned(
-            top: 20.0,
-            left: 20.0,
-            child: Image.asset(
-              'assets/Wappen_at_silz.svg.png',
-              width: 70,
-              height: 70,
+          // Background Image with Overlay
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/Pfarrkirche_Silz_2015.JPG'),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
+          Container(
+            color: Colors.black.withOpacity(0.5),
+            width: double.infinity,
+            height: double.infinity,
+          ),
+
+          // Header Logo
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 50.0),
+              child: Image.asset(
+                'assets/Wappen_at_silz.svg.png',
+                width: 100,
+                height: 100,
+              ),
+            ),
+          ),
+
+          // Language Dropdown
           Positioned(
             top: 20.0,
             right: 20.0,
-            child: Row(
-              children: [
-                const Text(
-                  '',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    color: Colors.white,
-                  ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                width: 100.0,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFD2B48C),
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
-                SizedBox(
-                  width: 100.0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFD2B48C),
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Theme(
-                      data: Theme.of(context).copyWith(
-                        canvasColor: const Color(0xFFD2B48C),
-                      ),
-                      child: DropdownButton<String>(
-                        value: selectedLanguageDefault,
-                        items: <String>['English', 'Deutsch'].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Center(
-                              child: Text(
-                                value,
-                                style: const TextStyle(fontSize: 16.0, color: Colors.white),
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {
-                          if (newValue != null) {
-                            setState(() {
-                              selectedLanguageDefault = newValue;
-                              welcomeMessageDefault =
-                              selectedLanguageDefault == "Deutsch" ? welcomeMessageGerman : welcomeMessageEnglish;
-                            });
-                            updateLanguageOfCurrentBibleVerse();
-                          }
-                        },
-                        icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
-                        underline: Container(
-                          height: 0,
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.transparent),
+                child: Theme(
+                  data: Theme.of(context).copyWith(
+                    canvasColor: const Color(0xFFD2B48C),
+                  ),
+                  child: DropdownButton<String>(
+                    value: selectedLanguageDefault,
+                    items: <String>['English', 'Deutsch'].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Center(
+                          child: Text(
+                            value,
+                            style: const TextStyle(fontSize: 16.0, color: Colors.white),
                           ),
                         ),
-                        isExpanded: true,
-                        iconSize: 24.0,
-                        elevation: 16,
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      if (newValue != null) {
+                        setState(() {
+                          selectedLanguageDefault = newValue;
+                          welcomeMessageDefault =
+                          selectedLanguageDefault == 'Deutsch' ? 'Willkommen!' : 'Welcome!';
+                        });
+                        // Uncomment the line below if you have the 'updateLanguageOfCurrentBibleVerse' method
+                        // updateLanguageOfCurrentBibleVerse();
+                      }
+                    },
+                    icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+                    underline: Container(
+                      height: 0,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.transparent),
                       ),
                     ),
+                    isExpanded: true,
+                    iconSize: 24.0,
+                    elevation: 16,
                   ),
                 ),
-              ],
+              ),
             ),
           ),
-          Center(
-            child: SingleChildScrollView(
+
+          // Welcome Message
+          Padding(
+            padding: const EdgeInsets.only(top: 0.0), // Adjusted the top padding
+            child: Center(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const SizedBox(height: 40),
-                  SizedBox(
-                    height: 100,
-                    child: FittedBox(
-                      child: Text(
-                        welcomeMessageDefault,
-                        style: const TextStyle(
-                          fontSize: 32.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          shadows: <Shadow>[
-                            Shadow(
-                              offset: Offset(1.0, 1.0),
-                              blurRadius: 3.0,
-                              color: Colors.black,
-                            ),
-                          ],
+                  Text(
+                    welcomeMessageDefault,
+                    style: const TextStyle(
+                      fontSize: 36.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(2.0, 2.0),
+                          blurRadius: 5.0,
+                          color: Colors.black,
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: 20.0),
+                  const SizedBox(height: 10.0),
+
+                  // Bible Verse Container
                   Container(
-                    height: 300.0,
+                    height: 280.0,
+                    width: MediaQuery.of(context).size.width - 40,
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.4),
+                      color: Colors.black.withOpacity(0.6),
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     child: Stack(
@@ -519,6 +524,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
                           child: MaterialButton(
                             onPressed: () {
                               print("Refresh button pressed!");
+                              // Uncomment the line below if you have the 'bibleVerseContentBackup' and 'bibleRandomizer' methods
                               bibleVerseContentBackup.clear();
                               bibleRandomizer();
                             },
@@ -534,53 +540,44 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
                       ],
                     ),
                   ),
-                  const SizedBox(height: 20.0),
-                  Container(
-                    height: 150,
-                    margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: SingleChildScrollView(
-                        child: GestureDetector(
-                          onTap: () {
-                            // Navigate to the Main Dashboard
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const DashboardScreen(),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(50.0),
-                                topRight: Radius.circular(50.0),
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: const Color(0xFFD2B48C).withOpacity(0.6),
-                                  spreadRadius: 5,
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 3),
-                                ),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(50.0),
-                                topRight: Radius.circular(50.0),
-                              ),
-                              child: Image.asset(
-                                'assets/church_door.png',
-                                width: 100,
-                                height: 150,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        )
-                    ),
-                  ),
                 ],
+              ),
+            ),
+          ),
+
+          // Dashboard Button
+          Positioned(
+            bottom: 20.0,
+            left: 20.0,
+            right: 20.0,
+            child: GestureDetector(
+              onTap: () {
+                // Navigate to the Main Dashboard
+                // Uncomment the line below if you have the 'DashboardScreen' class
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DashboardScreen()));
+              },
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFFD2B48C).withOpacity(0.6),
+                      spreadRadius: 5,
+                      blurRadius: 10,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: Image.asset(
+                    'assets/church_door.png',
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.contain,
+                  ),
+                ),
               ),
             ),
           ),
@@ -588,6 +585,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
       ),
     );
   }
+
 
   @override
   void dispose() {
