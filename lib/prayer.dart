@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'text_contents.dart';
+import 'mail_settings.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:sendgrid_mailer/sendgrid_mailer.dart';
 
