@@ -87,48 +87,54 @@ class _DonationPageState extends State<DonationPage> {
                   ),
                 ),
                 const SizedBox(height: 16.0),
-                ExpansionPanelList(
-                  elevation: 1,
-                  expandedHeaderPadding: const EdgeInsets.all(16),
-                  expansionCallback: (int index, bool isExpanded) {
-                    setState(() {
-                      _data[index].isExpanded = isExpanded;
-                    });
-                  },
-                  children: _data.map<ExpansionPanel>((Item item) {
-                    return ExpansionPanel(
-                      headerBuilder: (BuildContext context, bool isExpanded) {
-                        return ListTile(
-                          title: Text(
-                            item.headerValue,
-                            style: GoogleFonts.lato(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Color(0xFFD2B48C),
-                              letterSpacing: 1.5
-                            ),
-                          ),
-                        );
-                      },
-                      body: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              item.expandedValue,
+                Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  elevation: 4.0,
+                  child: ExpansionPanelList(
+                    elevation: 1,
+                    expandedHeaderPadding: const EdgeInsets.all(16),
+                    expansionCallback: (int index, bool isExpanded) {
+                      setState(() {
+                        _data[index].isExpanded = isExpanded;
+                      });
+                    },
+                    children: _data.map<ExpansionPanel>((Item item) {
+                      return ExpansionPanel(
+                        headerBuilder: (BuildContext context, bool isExpanded) {
+                          return ListTile(
+                            title: Text(
+                              item.headerValue,
                               style: GoogleFonts.lato(
-                                color: Colors.grey[600],
-                                fontSize: 16,
-                                letterSpacing: 1.5
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                color: const Color(0xFFD2B48C),
+                                letterSpacing: 1.5,
                               ),
                             ),
-                          ],
+                          );
+                        },
+                        body: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                item.expandedValue,
+                                style: GoogleFonts.lato(
+                                  color: Colors.grey[600],
+                                  fontSize: 16,
+                                  letterSpacing: 1.5,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      isExpanded: item.isExpanded,
-                    );
-                  }).toList(),
+                        isExpanded: item.isExpanded,
+                      );
+                    }).toList(),
+                  ),
                 ),
                 const SizedBox(height: 16,),
                 Card(

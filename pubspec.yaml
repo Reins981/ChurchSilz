@@ -30,15 +30,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  http: ^1.1.0
+  http: ^0.13.0
   carousel_slider: ^4.2.1
   just_audio: ^0.9.35
   assets_audio_player: ^3.1.1
   photo_view: ^0.14.0
-  flutter_map: ^6.0.1
-  latlong2: ^0.9.0
+  flutter_map: ^4.0.0
+  latlong2: ^0.8.0
   url_launcher: ^6.2.1
-  google_fonts: ^6.1.0
+  google_fonts: ^4.0.4
+  sendgrid_mailer: ^0.1.3
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -86,6 +87,8 @@ flutter:
     - assets/news2.jpg
     - assets/background_donation.jpg
     - assets/church_door.png
+    - assets/prayer_icon.ico
+    - assets/prayer.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
