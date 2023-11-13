@@ -6,7 +6,7 @@ const bool mailUseTls = true;
 const String mailUsername = "apikey";
 const String mailPassword = "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";
 const String mailDefaultSender = "default2402@gmail.com";
-const String mailRecipient = "reins981@gmail.com";
+const String mailRecipient = "pfarre.silz@dibk.at";
 
 
 String getTextContentGerman(String textContentType) {
